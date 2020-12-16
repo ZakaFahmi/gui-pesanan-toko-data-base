@@ -1,0 +1,376 @@
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+import sys
+import mysql.connector as mc
+
+
+class InsertDialog(QDialog):
+    def __init__(self, *args, **kwargs):
+        super(InsertDialog, self).__init__(*args, **kwargs)
+
+        self.QBtn = QPushButton()
+        self.QBtn.setText("Daftar")
+
+        self.setWindowTitle("Masukkan Data")
+        self.setFixedWidth(400)
+        self.setFixedHeight(300)
+
+        self.QBtn.clicked.connect(self.addstudent)
+
+        layout = QVBoxLayout()
+
+        self.idmenukat_combobox = QComboBox()
+        self.idmenukat_combobox.addItem("1")
+        self.idmenukat_combobox.addItem("2")
+        self.idmenukat_combobox.addItem("3")
+        self.idmenukat_combobox.addItem("4")
+        self.idmenukat_combobox.addItem("5")
+        self.idmenukat_combobox.addItem("7")
+        self.idmenukat_combobox.addItem("8")
+        self.idmenukat_combobox.addItem("9")
+        self.idmenukat_combobox.addItem("10")
+        self.idmenukat_combobox.addItem("11")
+        self.idmenukat_combobox.addItem("12")
+        self.idmenukat_combobox.addItem("13")
+        self.idmenukat_combobox.addItem("16")
+        self.idmenukat_combobox.addItem("17")
+        self.idmenukat_combobox.addItem("18")
+        self.idmenukat_combobox.addItem("19")
+        self.idmenukat_combobox.addItem("20")
+        self.idmenukat_combobox.addItem("21")
+        self.idmenukat_combobox.addItem("22")
+        layout.addWidget(self.idmenukat_combobox)
+
+        self.namamenu_input = QLineEdit()
+        self.namamenu_input.setPlaceholderText("namamenu")
+        layout.addWidget(self.namamenu_input)
+
+        self.keterangan_input = QLineEdit()
+        self.keterangan_input.setPlaceholderText("keterangan")
+        layout.addWidget(self.keterangan_input)
+
+        self.filegambar_input = QLineEdit()
+        self.filegambar_input.setPlaceholderText("filegambar")
+        layout.addWidget(self.filegambar_input)
+
+        self.harga_input = QLineEdit()
+        self.harga_input.setPlaceholderText("harga")
+        layout.addWidget(self.harga_input)
+
+        self.satuan_input = QLineEdit()
+        self.satuan_input.setPlaceholderText("satuan")
+        layout.addWidget(self.satuan_input)
+
+        layout.addWidget(self.QBtn)
+        self.setLayout(layout)
+
+    def addstudent(self):
+
+        idResto = ["3","3","5","4","6","19","21","26","45","152","58","85","85","138","213","243","243","210"]
+        idmenukat = ""
+        index = idResto[self.idmenukat_combobox.currentIndex()]
+        idresto = str(index)
+        namamenu = ""
+        keterangan = ""
+        filegambar = ""
+        harga = ""
+        satuan = ""
+
+        idmenukat = self.idmenukat_combobox.currentText()
+        namamenu = self.namamenu_input.text()
+        keterangan = self.keterangan_input.text()
+        filegambar = self.filegambar_input.text()
+        harga = self.harga_input.text()
+        satuan = self.satuan_input.text()
+
+        self.mydb = mc.connect(
+            host="kprikaryasehat.site",
+            user="kprikary_kuliah",
+            password="unijoyo2020",
+            database="kprikary_resto"
+        )
+        self.mycursor = self.mydb.cursor()
+        self.mycursor.execute("INSERT INTO menu1 (idmenukat, idresto, namamenu, keterangan, filegambar, harga, satuan) VALUES ("+ idmenukat + ", " + idresto + ", '"+ namamenu + "', '" + keterangan + "', '" + filegambar + "', " +  harga + ", '" + satuan + "')" )
+        self.mydb.commit()
+        self.mycursor.close()
+        self.mydb.close()
+        QMessageBox.information(QMessageBox(),'Berhasil','Mahasiswa berhasil ditambahkan ke database.')
+        self.close()
+            
+        #except Exception:
+           # QMessageBox.warning(QMessageBox(), 'Kesalahan', 'Tidak dapat menambahkan mahasiswa ke database.')
+
+class UpdateDialog(QDialog):
+    def __init__(self, *args, **kwargs):
+        super(UpdateDialog, self).__init__(*args, **kwargs)
+
+        self.QBtn = QPushButton()
+        self.QBtn.setText("Perbarui")
+
+        self.setWindowTitle("Update Data")
+        self.setFixedWidth(400)
+        self.setFixedHeight(300)
+
+        self.QBtn.clicked.connect(self.update)
+
+        layout = QVBoxLayout()
+
+        self.idmenu_input = QLineEdit()
+        self.idmenu_input.setPlaceholderText("idmenu")
+        layout.addWidget(self.idmenu_input)
+
+        self.idmenukat_combobox = QComboBox()
+        self.idmenukat_combobox.addItem("1")
+        self.idmenukat_combobox.addItem("2")
+        self.idmenukat_combobox.addItem("3")
+        self.idmenukat_combobox.addItem("4")
+        self.idmenukat_combobox.addItem("5")
+        self.idmenukat_combobox.addItem("7")
+        self.idmenukat_combobox.addItem("8")
+        self.idmenukat_combobox.addItem("9")
+        self.idmenukat_combobox.addItem("10")
+        self.idmenukat_combobox.addItem("11")
+        self.idmenukat_combobox.addItem("12")
+        self.idmenukat_combobox.addItem("13")
+        self.idmenukat_combobox.addItem("16")
+        self.idmenukat_combobox.addItem("17")
+        self.idmenukat_combobox.addItem("18")
+        self.idmenukat_combobox.addItem("19")
+        self.idmenukat_combobox.addItem("20")
+        self.idmenukat_combobox.addItem("21")
+        self.idmenukat_combobox.addItem("22")
+        layout.addWidget(self.idmenukat_combobox)
+
+        self.namamenu_input = QLineEdit()
+        self.namamenu_input.setPlaceholderText("namamenu")
+        layout.addWidget(self.namamenu_input)
+
+        self.keterangan_input = QLineEdit()
+        self.keterangan_input.setPlaceholderText("keterangan")
+        layout.addWidget(self.keterangan_input)
+
+        self.filegambar_input = QLineEdit()
+        self.filegambar_input.setPlaceholderText("filegambar")
+        layout.addWidget(self.filegambar_input)
+
+        self.harga_input = QLineEdit()
+        self.harga_input.setPlaceholderText("harga")
+        layout.addWidget(self.harga_input)
+
+        self.satuan_input = QLineEdit()
+        self.satuan_input.setPlaceholderText("satuan")
+        layout.addWidget(self.satuan_input)
+
+        layout.addWidget(self.QBtn)
+        self.setLayout(layout)
+
+    def update(self):
+
+        idResto = ["3","3","5","4","6","19","21","26","45","152","58","85","85","138","213","243","243","210"]
+        idmenukat = ""
+        idmenu = ""
+        index = idResto[self.idmenukat_combobox.currentIndex()]
+        idresto = str(index)
+        namamenu = ""
+        keterangan = ""
+        filegambar = ""
+        harga = ""
+        satuan = ""
+
+        idmenu = self.idmenu_input.text()
+        idmenukat = self.idmenukat_combobox.currentText()
+        namamenu = self.namamenu_input.text()
+        keterangan = self.keterangan_input.text()
+        filegambar = self.filegambar_input.text()
+        harga = self.harga_input.text()
+        satuan = self.satuan_input.text()
+        self.mydb = mc.connect(
+            host="kprikaryasehat.site",
+            user="kprikary_kuliah",
+            password="unijoyo2020",
+            database="kprikary_resto"
+        )
+        self.mycursor = self.mydb.cursor()
+        self.mycursor.execute("UPDATE menu1 SET idmenukat='"+ idmenukat + "', idresto='"+ idresto + "', namamenu='"+ namamenu + "', keterangan='"+ keterangan + "', harga='"+ harga + "', satuan='"+ satuan + "' WHERE idmenu='"+ idmenu +"'")
+        self.mydb.commit()
+        self.mycursor.close()
+        self.mydb.close()
+        QMessageBox.information(QMessageBox(),'Berhasil','Mahasiswa berhasil ditambahkan ke database.')
+        self.close()
+        #except Exception:
+         #   QMessageBox.warning(QMessageBox(), 'Kesalahan', 'Tidak dapat menambahkan mahasiswa ke database.')
+
+
+class SearchDialog(QDialog):
+    def __init__(self, *args, **kwargs):
+        super(SearchDialog, self).__init__(*args, **kwargs)
+
+        self.QBtn = QPushButton()
+        self.QBtn.setText("Cari")
+
+        self.setWindowTitle("Cari Data")
+        self.setFixedWidth(400)
+        self.setFixedHeight(100)
+        self.QBtn.clicked.connect(self.searchstudent)
+        layout = QVBoxLayout()
+
+        self.searchinput = QLineEdit()
+        self.searchinput.setPlaceholderText("idmenu")
+        layout.addWidget(self.searchinput)
+        layout.addWidget(self.QBtn)
+        self.setLayout(layout)
+
+    def searchstudent(self):
+
+        searchidmenu = ""
+        searchidmenu = self.searchinput.text()
+        self.mydb = mc.connect(
+            host="kprikaryasehat.site",
+            user="kprikary_kuliah",
+            password="unijoyo2020",
+            database="kprikary_resto"
+        )
+        self.mycursor = self.mydb.cursor()
+        exe = "SELECT * FROM menu1 WHERE idmenu =%s"
+        result = self.mycursor.execute(exe, searchidmenu)
+        row = result.fetchone()
+        searchresult = "idmenu : "+row[0]+'\n'+"namamenu : "+row[3]+'\n'+"keterangan : "+row[4]+'\n'+"filegambar : "+row[5]+'\n'+"harga : "+row[6]+'\n'+"satuan : "+row[7]
+        QMessageBox.information(QMessageBox(), 'Berhasil', searchresult)
+        self.mydb.commit()
+        self.mycursor.close()
+        self.mydb.close()
+        #except Exception:
+         #   QMessageBox.warning(QMessageBox(), 'Kesalahan', 'Tidak dapat menemukan mahasiswa dari database.')
+
+class DeleteDialog(QDialog):
+    def __init__(self, *args, **kwargs):
+        super(DeleteDialog, self).__init__(*args, **kwargs)
+
+        self.QBtn = QPushButton()
+        self.QBtn.setText("Hapus")
+
+        self.setWindowTitle("Hapus Data")
+        self.setFixedWidth(400)
+        self.setFixedHeight(100)
+        self.QBtn.clicked.connect(self.deletestudent)
+        layout = QVBoxLayout()
+
+        self.deleteinput = QLineEdit()
+        self.onlyInt = QIntValidator()
+        self.deleteinput.setValidator(self.onlyInt)
+        self.deleteinput.setPlaceholderText("idmenu")
+        layout.addWidget(self.deleteinput)
+        layout.addWidget(self.QBtn)
+        self.setLayout(layout)
+    def deletestudent(self):
+
+        delidmenu = ""
+        delidmenu = self.deleteinput.text()
+        try:
+            self.mydb = mc.connect(
+            host="kprikaryasehat.site",
+            user="kprikary_kuliah",
+            password="unijoyo2020",
+            database="kprikary_resto"
+        )
+            self.mycursor = self.mydb.cursor()
+            self.mycursor.execute("DELETE from menu1 WHERE idmenu="+str(delidmenu))
+            self.mydb.commit()
+            self.mycursor.close()
+            self.mydb.close()
+            QMessageBox.information(QMessageBox(),'Berhasil','Berhasil dihapus dari tabel.')
+            self.close()
+        except Exception:
+            QMessageBox.warning(QMessageBox(), 'Kesalahan', 'Tidak dapat menghapus mahasiswa dari database.')
+
+class MainWindow(QMainWindow):
+    def __init__(self, *args, **kwargs):
+        super(MainWindow, self).__init__(*args, **kwargs)
+        self.setWindowIcon(QIcon('icon/logo.png'))
+
+        self.setWindowTitle("Tugas Praktikum")
+        self.setMinimumSize(1000, 600)
+
+        self.tableWidget = QTableWidget()
+        self.setCentralWidget(self.tableWidget)
+        self.tableWidget.setAlternatingRowColors(True)
+        self.tableWidget.setColumnCount(8)
+        self.tableWidget.horizontalHeader().setCascadingSectionResizes(False)
+        self.tableWidget.horizontalHeader().setSortIndicatorShown(False)
+        self.tableWidget.horizontalHeader().setStretchLastSection(True)
+        self.tableWidget.verticalHeader().setVisible(False)
+        self.tableWidget.verticalHeader().setCascadingSectionResizes(False)
+        self.tableWidget.verticalHeader().setStretchLastSection(False)
+        self.tableWidget.setHorizontalHeaderLabels(("idmenu", "idmenukat", "idresto", "namamenu", "keterangan","filegambar", "harga","satuan"))
+
+        toolbar = QToolBar()
+        toolbar.setMovable(False)
+        self.addToolBar(toolbar)
+
+        btn_ac_adduser = QAction(QIcon("icon/add.png"), "Tambah Data Mahasiswa", self)
+        btn_ac_adduser.triggered.connect(self.insert)
+        btn_ac_adduser.setStatusTip("Tambah Data Mahasiswa")
+        toolbar.addAction(btn_ac_adduser)
+
+        btn_ac_show = QAction(QIcon("icon/show.png"),"Tampilkan Data Mahasiswa",self)
+        btn_ac_show.triggered.connect(self.loaddata)
+        btn_ac_show.setStatusTip("Tampilkan Data Mahasiswa")
+        toolbar.addAction(btn_ac_show)
+
+        btn_ac_adduser = QAction(QIcon("icon/update.png"), "Update Data Mahasiswa", self)
+        btn_ac_adduser.triggered.connect(self.update)
+        btn_ac_adduser.setStatusTip("Tambah Data Mahasiswa")
+        toolbar.addAction(btn_ac_adduser)
+        
+        btn_ac_search = QAction(QIcon("icon/search.png"), "Cari Data Mahasiswa", self)
+        btn_ac_search.triggered.connect(self.search)
+        btn_ac_search.setStatusTip("Cari Data Mahasiswa")
+        toolbar.addAction(btn_ac_search)
+
+        btn_ac_delete = QAction(QIcon("icon/delete.png"), "Hapus Data Mahasiswa", self)
+        btn_ac_delete.triggered.connect(self.delete)
+        btn_ac_delete.setStatusTip("Hapus Data Mahasiswa")
+        toolbar.addAction(btn_ac_delete)
+
+    def loaddata(self):
+        mydb = mc.connect(
+            host="kprikaryasehat.site",
+            user="kprikary_kuliah",
+            password="unijoyo2020",
+            database="kprikary_resto"
+        )
+
+        mycursor = mydb.cursor()
+
+        mycursor.execute("SELECT * FROM menu1")
+
+        result = mycursor.fetchall()
+        self.tableWidget.setRowCount(0)
+        for row_number, row_data in enumerate(result):
+            #print(row_number)
+            self.tableWidget.insertRow(row_number)
+            for column_number, data in enumerate(row_data):
+                #print(column_number)
+                self.tableWidget.setItem(row_number, column_number, QTableWidgetItem(str(data)))
+        mycursor.close()
+
+    def insert(self):
+        dlg = InsertDialog()
+        dlg.exec_()
+
+    def update(self):
+        dlg = UpdateDialog()
+        dlg.exec_()
+
+    def delete(self):
+        dlg = DeleteDialog()
+        dlg.exec_()
+
+    def search(self):
+        dlg = SearchDialog()
+        dlg.exec_()
+
+app = QApplication(sys.argv)
+window = MainWindow()
+window.show()
+sys.exit(app.exec_())
